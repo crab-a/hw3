@@ -1,4 +1,4 @@
-class Sample
+class Sample:
 
     def __init__(self, s_id, genes, label):
         self.s_id = s_id
