@@ -11,7 +11,6 @@ class Data:
         """
         df = pandas.read_csv(path)
         self.data = df.to_dict(orient="list")
-        self.distance_matrix = []
 
     def create_samples(self):
         samples = []
