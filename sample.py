@@ -10,3 +10,6 @@ class Sample:
         for i in range(len(self.genes)):
             temp_sum += ((self.genes[i] - other.genes[i])**2)
         return temp_sum**0.5
+
+    def get_dist_to_other(self,other):
+        self.dist_row[other.s_id-1]

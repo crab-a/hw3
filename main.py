@@ -7,8 +7,8 @@ def main(argv):
     print('Question 1:')
     the_data = data.Data("Leukemia_sample.csv")
     samples = the_data.create_samples()
-    the_data.fix_create_distance_matrix(samples)
-    print(the_data.distance_matrix[2][1])
+    the_data.create_distance_matrix(samples)
+    print(the_data.distance_matrix[0][1])
 
 
 

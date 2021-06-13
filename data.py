@@ -3,7 +3,6 @@ import sample
 
 
 class Data:
-
     def __init__(self, path):
         """
         initial the new data object
@@ -11,6 +10,7 @@ class Data:
         """
         df = pandas.read_csv(path)
         self.data = df.to_dict(orient="list")
+
 
     def create_samples(self):
         samples = []
@@ -28,22 +28,8 @@ class Data:
 
         return samples
 
-    def create_distance_matrix(self, samples):
-        for i in range(samples):
-            for j in range(samples):
-                if i < j:
-                    continue
-                elif i == j:
-                    self.distance_matrix[i][j] = 0
-                else:
-                    self.distance_matrix[i][j] = compute_euclidean_distance(samples.genes[i], samples.genes[j])
-                    self.distance_matrix[j][i] = self.distance_matrix[i][j]
 
-        """
-        make distance matrix here, save it in self.distance_matrix
-        """
-
-    def fix_create_distance_matrix(self, samples):  # i dunno
+    def create_distance_matrix(self, samples):  # i dunno
         length = len(samples)
         self.distance_matrix = [[0]*length]*length
         for i in range(length):
