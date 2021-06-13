@@ -1,7 +1,12 @@
 import abc
+
+
 class Link:
     @abc.abstractmethod
     def compute(self, cluster, other):
+        """this is abstract"""
+        return
+
 
 class SingleLink(Link):
     def compute(self, cluster, other):
@@ -10,6 +15,7 @@ class SingleLink(Link):
             for other_sample in range(other):
                 dist_list.append(this_sample.get_dist(other_sample))
         return min(dist_list)
+
 
 class CompleteLink(Link):
     def compute(self, cluster, other):
