@@ -3,7 +3,7 @@ class AgglomerativeClustering:
         self.link = link
         self.samples = samples
         self.clusters = []
-# sgr
+
     def compute_silhoeutte(self):
         dict = {}
         min_dist_to_cluster_list = []
