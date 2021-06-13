@@ -29,12 +29,16 @@ class Data:
         return samples
 
 
-    def create_distance_matrix(self, samples):  # i dunno
+
+    def create_distance_matrix(self, samples):
         length = len(samples)
         self.distance_matrix = [[0]*length]*length
         for i in range(length):
             for j in range(length):
-                if i < j:
+                if i <= j:
                     continue
                 self.distance_matrix[i][j] = samples[i].compute_euclidean_distance(samples[j])
                 self.distance_matrix[j][i] = self.distance_matrix[i][j]
+        for i, samp in enumerate(samples):
+            samp.distance_row = self.distance_matrix[i]
+
