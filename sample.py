@@ -9,8 +9,8 @@ class Sample:
     def compute_euclidean_distance(self, other):
         temp_sum = 0
         for i in range(len(self.genes)):
-            temp_sum += ((self.genes[i] - other.genes[i])**2)
-        return temp_sum**0.5
+            temp_sum += ((self.genes[i] - other.genes[i]) ** 2)
+        return temp_sum ** 0.5
 
     def get_dist(self, other):
-        return self.distance_row[other.s_id-1]
+        return self.distance_row[other.s_id - 1]

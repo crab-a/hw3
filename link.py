@@ -19,7 +19,7 @@ class SingleLink(Link):
 
 class CompleteLink(Link):
     def compute(self, cluster, other):
-        max_dist =0
+        max_dist = 0
         for this_sample in range(cluster):
             for other_sample in range(other):
                 if this_sample.get_dist(other_sample) > max_dist:

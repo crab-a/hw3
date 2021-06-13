@@ -8,7 +8,7 @@ class AgglomerativeClustering:
         self.samples = samples
         self.clusters = [cluster.Cluster(c_id, sample) for c_id, sample in enumerate(self.samples)]
 
-    def compute_silhoeutte(self):
+    def compute_silhouette(self):
         dict = {}
         min_dist_to_cluster_list = []
         for cluster in self.clusters:
@@ -30,6 +30,20 @@ class AgglomerativeClustering:
                     out_cluster = min(min_dist_to_cluster_list)
                     dict[sample.s_id] = (out_cluster - in_cluster) / max(out_cluster, in_cluster)
         return dict
+
+    def compute_summery_silhouette(self):
+        dict_for_point = self.compute_silhouette()
+        silhoeutte_dict = {}
+        silhoeutte_all = 0
+        for cluster in self.clusters:
+            cluster_rate = 0
+            for sample in cluster.samples:
+                cluster_rate += dict_for_point[sample.s_id]
+            silhoeutte_dict[cluster.id] = cluster_rate / len(cluster.samples)
+        for sample in self.samples:
+            silhoeutte_all += dict_for_point[sample.s_id]
+        silhoeutte_dict[0] = silhoeutte_all / len(self.samples)
+        return silhoeutte_dict
 
     def compute_rand_index(self):
         TP = 0
@@ -57,16 +71,5 @@ class AgglomerativeClustering:
         true = TP + TN
         return true / sum([TP, TN, FP, FN])
 
-    def compute_summery_silhoeutte(self):
-        dict_for_point = self.compute_silhoeutte()
-        silhoeutte_dict = {}
-        silhoeutte_all = 0
-        for cluster in self.clusters:
-            cluster_rate = 0
-            for sample in cluster.samples:
-                cluster_rate += dict_for_point[sample.s_id]
-            silhoeutte_dict[cluster.id] = cluster_rate / len(cluster.samples)
-        for sample in self.samples:
-            silhoeutte_all += dict_for_point[sample.s_id]
-        silhoeutte_dict[0] = silhoeutte_all / len(self.samples)
-        return silhoeutte_dict
+    def run(self, max_clusters):
+        pass

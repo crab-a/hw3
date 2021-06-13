@@ -11,6 +11,5 @@ def main(argv):
     print(the_data.distance_matrix[0][1])
 
 
-
 if __name__ == '__main__':
     main(sys.argv)

@@ -11,7 +11,6 @@ class Data:
         df = pandas.read_csv(path)
         self.data = df.to_dict(orient="list")
 
-
     def create_samples(self):
         samples = []
         genes_names = [key for key in self.data]
@@ -28,11 +27,9 @@ class Data:
 
         return samples
 
-
-
     def create_distance_matrix(self, samples):
         length = len(samples)
-        self.distance_matrix = [[0]*length]*length
+        self.distance_matrix = [[0] * length] * length
         for i in range(length):
             for j in range(length):
                 if i <= j:
@@ -41,4 +38,3 @@ class Data:
                 self.distance_matrix[j][i] = self.distance_matrix[i][j]
         for i, samp in enumerate(samples):
             samp.distance_row = self.distance_matrix[i]
-
