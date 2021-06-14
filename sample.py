@@ -4,7 +4,7 @@ class Sample:
         self.s_id = s_id
         self.genes = genes
         self.label = label
-        self.distance_row = [0]
+        self.distance_row = {s_id: 0}
 
     def compute_euclidean_distance(self, other):
         temp_sum = 0
@@ -13,4 +13,4 @@ class Sample:
         return temp_sum ** 0.5
 
     def get_dist(self, other):
-        return self.distance_row[other.s_id - 1]
+        return self.distance_row[other.s_id]

@@ -11,8 +11,8 @@ class Link:
 class SingleLink(Link):
     def compute(self, cluster, other):
         dist_list = []
-        for this_sample in range(cluster):
-            for other_sample in range(other):
+        for this_sample in cluster.samples:
+            for other_sample in other.samples:
                 dist_list.append(this_sample.get_dist(other_sample))
         return min(dist_list)
 

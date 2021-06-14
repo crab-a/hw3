@@ -6,8 +6,7 @@ class AgglomerativeClustering:
     def __init__(self, link, samples):
         self.link = link
         self.samples = samples
-        self.clusters = [cluster.Cluster(c_id, sample) for c_id, sample in enumerate(self.samples)]
-        self.distance_matrix = self.create_distance_matrix()
+        self.clusters = [cluster.Cluster(c_id, [sample]) for c_id, sample in enumerate(self.samples)]
 
     def compute_silhouette(self):
         dict = {}
@@ -92,9 +91,15 @@ class AgglomerativeClustering:
                 dist_list_current_cluster = {}
                 for j, other_cluster in enumerate(self.clusters):
                     dist_list_current_cluster[other_cluster.id] = self.link.compute(current_cluster, other_cluster)
-                closest_cluster_id = min(dist_list_current_cluster, key=dist_list_current_cluster.get())
+                closest_cluster_id = min(dist_list_current_cluster, key=dist_list_current_cluster.get)
                 current_cluster.merge(self.clusters[closest_cluster_id])
                 self.clusters.pop(closest_cluster_id)
+                # self.clusters.pop(current_cluster.id)  #not sure if needed
                 self.clusters[current_cluster.id] = current_cluster
                 length -= 1
-        
+
+        silhouette_dict=self.compute_summery_silhouette()
+        print(f'{self.link}:')
+        for c in self.clusters:
+            c.print_details(silhouette_dict[c.id])
+        print(f"Whole data: silhouette = {silhouette_dict[0]}, RI = {self.compute_rand_index}")
