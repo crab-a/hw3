@@ -4,6 +4,7 @@ class Cluster:
         self.samples = samples
 
     def merge(self, other):
+        self.id = self.id if self.id <= other.id else other.id
         self.samples.extend(other.samples)
         self.samples = sorted(self.samples, key=lambda sample: self.samples[sample].s_id)
         del other
