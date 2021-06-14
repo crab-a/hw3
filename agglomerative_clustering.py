@@ -89,8 +89,19 @@ class AgglomerativeClustering:
         new_clusters = []
         length = len(self.clusters)
         while length > max_clusters:
-            for current_cluster in self.clusters:  # need to uptade the dist matrix each time, need to prevent adding cluster to two diffrent clusters.. etc etc etc in short need more work!!
-                dist_to_closest_cluster = min(self.distance_matrix[current_cluster.id])
-                id_of_other_cluster = self.distance_matrix[current_cluster.id].index(dist_to_closest_cluster)
-                current_cluster.merge(self.clusters[id_of_other_cluster])
-                length -= 1
+            for i, current_cluster in enumerate(self.clusters):  # need to update the dist matrix each time, need to prevent adding cluster to two diffrent clusters.. etc etc etc in short need more work!!
+                if i = 0:
+                    dist_to_closest_cluster = min(self.distance_matrix[current_cluster.id])
+                    id_of_other_cluster = self.distance_matrix[current_cluster.id].index(dist_to_closest_cluster)
+                    min_dist = dist_to_closest_cluster
+                    best_cluster = current_cluster
+                    best_id = id_of_other_cluster
+                else:
+                    dist_to_closest_cluster = min(self.distance_matrix[current_cluster.id])
+                    id_of_other_cluster = self.distance_matrix[current_cluster.id].index(dist_to_closest_cluster)
+                    if dist_to_closest_cluster < min_dist:
+                        best_cluster = current_cluster
+                        best_id = id_of_other_cluster
+            best_cluster.merge(self.clusters[best_id])
+            length -= 1
+
