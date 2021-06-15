@@ -11,9 +11,9 @@ class AgglomerativeClustering:
 
     def compute_silhouette(self):
         dict = {}
-        min_dist_to_cluster_list = []
         for cluster in self.clusters:
             for sample in cluster.samples:
+                min_dist_to_cluster_list = []
                 if len(cluster.samples) == 1:
                     dict[sample.s_id] = 0
                 else:
