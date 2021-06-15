@@ -1,12 +1,10 @@
-import cluster
-
-
+import cluster as c
 class AgglomerativeClustering:
 
     def __init__(self, link, samples):
         self.link = link
         self.samples = samples
-        self.clusters = [cluster.Cluster(c_id, [sample]) for c_id, sample in enumerate(self.samples)]
+        self.clusters = [c.Cluster(c_id, [sample]) for c_id, sample in enumerate(self.samples)]
         self.dict_clusters ={}
         for cluster in self.clusters:
             self.dict_clusters[cluster.id] = cluster
@@ -90,9 +88,11 @@ class AgglomerativeClustering:
     def run(self, max_clusters):
         length = len(self.clusters)
         while length > max_clusters:
-            for i, current_cluster in enumerate(self.dict_clusters):
-                for j, other_cluster in enumerate(self.dict_clusters):
-                    if i == 0 and j == 0:
+            for i, current_cluster in enumerate(self.dict_clusters.values()):
+                for j, other_cluster in enumerate(self.dict_clusters.values()):
+                    if i >= j:
+                        continue
+                    if i == 0 and j == 1:
                         best_cluster1 = current_cluster
                         best_cluster2 = other_cluster
                         min_dist = self.link.compute(current_cluster, other_cluster)
@@ -103,11 +103,12 @@ class AgglomerativeClustering:
                             best_cluster1 = current_cluster
                             best_cluster2 = other_cluster
             best_cluster1.merge(self.dict_clusters[best_cluster2.id])
-            del self.dict_clusters[best_cluster2.id]
+            self.dict_clusters.pop(best_cluster2.id)
             length -= 1
         self.clusters = []
-        for cluster in self.dict_clusters:
+        for cluster in self.dict_clusters.values():
             self.clusters.append(cluster)
+        self.clusters.sort(key=lambda cluster: cluster.id)
         silhouette_dict=self.compute_summery_silhouette()
         print(f'{self.link}:')
         for c in self.clusters:
