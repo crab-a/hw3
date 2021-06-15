@@ -1,11 +1,12 @@
 import cluster as c
+from collections import OrderedDict
 class AgglomerativeClustering:
 
     def __init__(self, link, samples):
         self.link = link
         self.samples = samples
-        self.clusters = [c.Cluster(c_id, [sample]) for c_id, sample in enumerate(self.samples)]
-        self.dict_clusters ={}
+        self.clusters = [c.Cluster(sample.s_id, [sample]) for c_id, sample in enumerate(self.samples)]
+        self.dict_clusters = OrderedDict()
         for cluster in self.clusters:
             self.dict_clusters[cluster.id] = cluster
 
@@ -59,31 +60,19 @@ class AgglomerativeClustering:
                 if sample1.label == sample2.label:
                     FP += 1
                     for current_cluster in self.clusters:
-                        if sample1 in current_cluster.samples & sample2 in current_cluster.samples:
+                        if sample1 in current_cluster.samples and sample2 in current_cluster.samples:
                             TP += 1
                             FP -= 1
                             break
                 else:
                     TN += 1
                     for current_cluster in self.clusters:
-                        if sample1 in current_cluster.samples & sample2 in current_cluster.samples:
+                        if sample1 in current_cluster.samples and sample2 in current_cluster.samples:
                             FN += 1
                             TN -= 1
                             break
         true = TP + TN
-        return true / sum([TP, TN, FP, FN])
-
-    def create_distance_matrix(self):
-        length = len(self.clusters)
-        distance_matrix = [[0] * length] * length
-        for this_cluster in self.clusters:
-            for other_cluster in self.clusters:
-                if this_cluster.id <= other_cluster.id:
-                    continue
-                distance_matrix[this_cluster.id][other_cluster.id] = self.link.compute(this_cluster, other_cluster)
-                distance_matrix[other_cluster.id][this_cluster.id] = distance_matrix[this_cluster.id][other_cluster.id]
-
-        return distance_matrix
+        return true / (TP+TN+FP+FN)
 
     def run(self, max_clusters):
         length = len(self.clusters)
@@ -108,9 +97,8 @@ class AgglomerativeClustering:
         self.clusters = []
         for cluster in self.dict_clusters.values():
             self.clusters.append(cluster)
-        self.clusters.sort(key=lambda cluster: cluster.id)
         silhouette_dict=self.compute_summery_silhouette()
         print(f'{self.link}:')
         for c in self.clusters:
             c.print_details(silhouette_dict[c.id])
-        print(f"Whole data: silhouette = {silhouette_dict[0]}, RI = {self.compute_rand_index}")
+        print(f"Whole data: silhouette = {round(silhouette_dict[0], 3)}, RI = {round(self.compute_rand_index(), 3)}")
