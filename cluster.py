@@ -32,6 +32,6 @@ class Cluster:
                 maximum = value
                 dominant = label
             elif value == maximum:
-                if label > dominant:
+                if label < dominant:
                     dominant = label
         return dominant
