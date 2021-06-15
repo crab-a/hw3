@@ -33,5 +33,6 @@ class CompleteLink(Link):
                 if this_sample.get_dist(other_sample) > max_dist:
                     max_dist = this_sample.get_dist(other_sample)
         return max_dist
+
     def name(self):
         return "complete link"

@@ -1,5 +1,7 @@
 import cluster as c
 from collections import OrderedDict
+
+
 class AgglomerativeClustering:
 
     def __init__(self, link, samples):
@@ -72,7 +74,7 @@ class AgglomerativeClustering:
                             TN -= 1
                             break
         true = TP + TN
-        return true / (TP+TN+FP+FN)
+        return true / (TP + TN + FP + FN)
 
     def run(self, max_clusters):
         length = len(self.clusters)
@@ -97,7 +99,7 @@ class AgglomerativeClustering:
         self.clusters = []
         for cluster in self.dict_clusters.values():
             self.clusters.append(cluster)
-        silhouette_dict=self.compute_summery_silhouette()
+        silhouette_dict = self.compute_summery_silhouette()
         print(f'{self.link.name()}:')
         for c in self.clusters:
             c.print_details(silhouette_dict[c.id])

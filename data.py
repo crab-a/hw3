@@ -28,8 +28,8 @@ class Data:
         return samples
 
     def create_distance_matrix(self, samples):
-#       length = len(samples)
-#       self.distance_matrix = [[0] * length] * length
+        #       length = len(samples)
+        #       self.distance_matrix = [[0] * length] * length
         for this_sample in samples:
             for other_sample in samples:
                 if this_sample.s_id <= other_sample.s_id:
