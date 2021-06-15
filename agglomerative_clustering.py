@@ -97,7 +97,7 @@ class AgglomerativeClustering:
         self.clusters = []
         for cluster in self.dict_clusters.values():
             self.clusters.append(cluster)
-        silhouette_dict = self.compute_summery_silhouette()
+        silhouette_dict=self.compute_summery_silhouette()
         print(f'{self.link.name()}:')
         for c in self.clusters:
             c.print_details(silhouette_dict[c.id])
