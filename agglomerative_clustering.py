@@ -97,8 +97,8 @@ class AgglomerativeClustering:
         self.clusters = []
         for cluster in self.dict_clusters.values():
             self.clusters.append(cluster)
-        silhouette_dict=self.compute_summery_silhouette()
-        print(f'{self.link}:')
+        silhouette_dict = self.compute_summery_silhouette()
+        print(f'{self.link.name()}:')
         for c in self.clusters:
             c.print_details(silhouette_dict[c.id])
         print(f"Whole data: silhouette = {round(silhouette_dict[0], 3)}, RI = {round(self.compute_rand_index(), 3)}")
