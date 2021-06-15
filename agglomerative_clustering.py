@@ -7,6 +7,9 @@ class AgglomerativeClustering:
         self.link = link
         self.samples = samples
         self.clusters = [cluster.Cluster(c_id, [sample]) for c_id, sample in enumerate(self.samples)]
+        self.dict_clusters ={}
+        for cluster in self.clusters:
+            self.dict_clusters[cluster.id] = cluster
 
     def compute_silhouette(self):
         dict = {}
@@ -87,17 +90,24 @@ class AgglomerativeClustering:
     def run(self, max_clusters):
         length = len(self.clusters)
         while length > max_clusters:
-            for i, current_cluster in enumerate(self.clusters):
-                dist_list_current_cluster = {}
-                for j, other_cluster in enumerate(self.clusters):
-                    dist_list_current_cluster[other_cluster.id] = self.link.compute(current_cluster, other_cluster)
-                closest_cluster_id = min(dist_list_current_cluster, key=dist_list_current_cluster.get)
-                current_cluster.merge(self.clusters[closest_cluster_id])
-                self.clusters.pop(closest_cluster_id)
-                # self.clusters.pop(current_cluster.id)  #not sure if needed
-                self.clusters[current_cluster.id] = current_cluster
-                length -= 1
-
+            for i, current_cluster in enumerate(self.dict_clusters):
+                for j, other_cluster in enumerate(self.dict_clusters):
+                    if i == 0 and j == 0:
+                        best_cluster1 = current_cluster
+                        best_cluster2 = other_cluster
+                        min_dist = self.link.compute(current_cluster, other_cluster)
+                    else:
+                        temp_dist = self.link.compute(current_cluster, other_cluster)
+                        if temp_dist < min_dist:
+                            min_dist = temp_dist
+                            best_cluster1 = current_cluster
+                            best_cluster2 = other_cluster
+            best_cluster1.merge(self.dict_clusters[best_cluster2.id])
+            del self.dict_clusters[best_cluster2.id]
+            length -= 1
+        self.clusters = []
+        for cluster in self.dict_clusters:
+            self.clusters.append(cluster)
         silhouette_dict=self.compute_summery_silhouette()
         print(f'{self.link}:')
         for c in self.clusters:
