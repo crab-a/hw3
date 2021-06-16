@@ -7,6 +7,11 @@ class Sample:
         self.distance_row = {s_id: 0}
 
     def compute_euclidean_distance(self, other):
+        """
+        computes the distances between self and other sample
+        :param other: the other sample
+        :return: the distance between them in L2 form
+        """
         temp_sum = 0
         for i in range(len(self.genes)):
             temp_sum += ((self.genes[i] - other.genes[i]) ** 2)
