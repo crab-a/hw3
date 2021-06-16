@@ -9,7 +9,7 @@ def main(argv):
     #  q1
     MAX_CLUSTER = 7
 
-    the_data = data
+    the_data = data.Data(argv[1])
     samples = the_data.create_samples()
     create_distance_matrix(samples)
     single_link = agglomerative_clustering.AgglomerativeClustering(link.SingleLink(), samples)
