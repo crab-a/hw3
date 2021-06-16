@@ -30,3 +30,4 @@ class Data:
             samples.append(new_sample)
 
         return samples
+
