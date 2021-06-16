@@ -2,15 +2,16 @@ import data
 import sys
 import agglomerative_clustering
 import link
+from sample import create_distance_matrix
 
 
 def main(argv):
     #  q1
     MAX_CLUSTER = 7
 
-    the_data = data.Data(argv[1])
+    the_data = data
     samples = the_data.create_samples()
-    the_data.create_distance_matrix(samples)
+    create_distance_matrix(samples)
     single_link = agglomerative_clustering.AgglomerativeClustering(link.SingleLink(), samples)
     single_link.run(MAX_CLUSTER)
     print()

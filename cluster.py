@@ -4,12 +4,22 @@ class Cluster:
         self.samples = samples
 
     def merge(self, other):
+        """
+        merge two cluster together, updating self and keeping the lower cluster index
+        :param other: the cluster to be merged with
+        :return: None
+        """
         self.id = self.id if self.id <= other.id else other.id
         self.samples.extend(other.samples)
         self.samples.sort(key=lambda sample: sample.s_id)
         del other
 
     def print_details(self, silhouette):
+        """
+        print helper for cluster details
+        :param silhouette: silhouette of the cluster
+        :return: None
+        """
         samples_ids = []
         for sample in self.samples:
             samples_ids.append(sample.s_id)
@@ -19,6 +29,10 @@ class Cluster:
         print(f'dominant label = {self.get_dominant()}, silhouette = {round(silhouette, 3)}')
 
     def get_dominant(self):
+        """
+        find the most popular label in the cluster
+        :return: the most popular label
+        """
         labels_dict = {}
         dominant = ""
         for sample in self.samples:

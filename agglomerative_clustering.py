@@ -13,6 +13,10 @@ class AgglomerativeClustering:
             self.dict_clusters[cluster.id] = cluster
 
     def compute_silhouette(self):
+        """
+        compute the silhouette score for each sample in our data. saved as a dictionary with s_id as key
+        :return: dictionary of the silhouette scores of the samples
+        """
         dict = {}
         for cluster in self.clusters:
             for sample in cluster.samples:
@@ -36,6 +40,11 @@ class AgglomerativeClustering:
         return dict
 
     def compute_summery_silhouette(self):
+        """
+        compute the silhouette for each cluster and for the whole dataset. saved as a dictionary with the cluster id as
+        a key. (key 0 is for the whole dataset)
+        :return: dictionary of the silhouette scores of the clusters and the whole dataset.
+        """
         dict_for_point = self.compute_silhouette()
         silhoeutte_dict = {}
         silhoeutte_all = 0
@@ -50,6 +59,10 @@ class AgglomerativeClustering:
         return silhoeutte_dict
 
     def compute_rand_index(self):
+        """
+        compute rand index as was described in the description
+        :return: rand index
+        """
         TP = 0
         TN = 0
         FP = 0
@@ -77,6 +90,11 @@ class AgglomerativeClustering:
         return true / (TP + TN + FP + FN)
 
     def run(self, max_clusters):
+        """
+        merging the clusters until having only max_clusters clusters
+        :param max_clusters: the num of clusters to have in the end of the run method
+        :return: Print the print the clusters and the silhouette of each cluster and then print silhouette and RI for whole data
+        """
         length = len(self.clusters)
         while length > max_clusters:
             for i, current_cluster in enumerate(self.dict_clusters.values()):
